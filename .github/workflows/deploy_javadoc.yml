@@ -1,0 +1,29 @@
+name: Deploy JavaDocs
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+
+      - name: Generate JavaDocs
+        run: ./gradlew generateJavadoc
+
+      - name: Deploy JavaDocs to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/docs/javadoc
+          publish_branch: gh-pages

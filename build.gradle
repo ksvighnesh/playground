@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // You can remove test dependencies if you're not writing tests
+}
+
+task generateJavadoc(type: Javadoc) {
+    destinationDir = file("$buildDir/docs/javadoc")
+    source = sourceSets.main.allJava
+    classpath = configurations.compileClasspath
+    options.memberLevel = JavadocMemberLevel.PUBLIC
+    options.links("https://docs.oracle.com/en/java/javase/11/docs/api/")
+}
